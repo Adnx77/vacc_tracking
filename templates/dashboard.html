@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+    <h2>Child Vaccination Dashboard</h2>
+
+    <p><b>Name:</b> {{ child.name }}</p>
+    <p><b>DOB:</b> {{ child.dob }}</p>
+    <p><b>Parent:</b> {{ child.parent_phone }}</p>
+    <p><b>Region:</b> {{ child.region.state }}, {{ child.region.district }}, {{ child.region.panchayat }}</p>
+
+    <form method="POST" action="/update_vaccines">
+        <input type="hidden" name="card_id" value="{{ child.card_id }}">
+
+        <h3>Vaccines</h3>
+
+        {% for v, date in child.vaccines.items() %}
+        <label>{{ v }}</label>
+        <input type="text" name="vaccine_{{ v }}" value="{{ date }}">
+        {% endfor %}
+
+        <button type="submit">Update</button>
+    </form>
+
+</body>
+
+</html>

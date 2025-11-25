@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+    <h2>New Registration</h2>
+
+    <form method="POST" action="/save_new">
+
+        <label>Card ID (Locked)</label>
+        <input type="text" name="card_id" value="{{ card_id }}" readonly>
+
+        <label>Name</label>
+        <input type="text" name="name" required>
+
+        <label>Date of Birth</label>
+        <input type="date" name="dob" required>
+
+        <label>Parent Email</label>
+        <input type="email" name="parent_email" required>
+
+        <label>Parent Phone</label>
+        <input type="text" name="parent_phone" required>
+
+        <h3>Region</h3>
+        <label>State</label>
+        <input type="text" name="state" required>
+
+        <label>District</label>
+        <input type="text" name="district" required>
+
+        <label>Panchayat</label>
+        <input type="text" name="panchayat" required>
+
+        <button type="submit">Save</button>
+    </form>
+
+</body>
+
+</html>
