@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>RFID Dashboard</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 100px;
+            background-color: #f2f2f2;
+        }
+        .card-box {
+            background-color: white;
+            padding: 50px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 15px rgba(0,0,0,0.2);
+            display: inline-block;
+        }
+        h1 {
+            color: #333;
+        }
+        p {
+            font-size: 18px;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="card-box">
+        <h1>Waiting for RFID Card...</h1>
+        <p>Please scan your card near the reader</p>
+    </div>
+
+    <script>
+        function checkUID() {
+            $.get("/check_uid", function(response) {
+                if(response.uid) {
+                    // Redirect to the card page
+                    window.location.href = "/card/" + response.uid;
+                }
+            });
+        }
+
+        // Poll every 500ms
+        setInterval(checkUID, 500);
+    </script>
+</body>
+</html>

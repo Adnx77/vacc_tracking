@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Child Dashboard</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f7f7f7; padding: 20px; }
+        .container { max-width: 800px; margin: auto; background: #fff; padding: 30px; border-radius: 10px; box-shadow: 0 0 15px rgba(0,0,0,0.1); }
+        h1 { color: #333; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { padding: 12px; border: 1px solid #ddd; text-align: left; }
+        th { background-color: #f2f2f2; }
+        input[type="text"], select { width: 100%; padding: 8px; box-sizing: border-box; border-radius: 5px; border: 1px solid #ccc; }
+        button { margin-top: 20px; padding: 12px; font-size: 16px; background: #28a745; color: #fff; border: none; border-radius: 5px; cursor: pointer; }
+        button:hover { background: #218838; }
+        a.button { display: inline-block; margin-top: 20px; padding: 10px 20px; background: #007BFF; color: #fff; text-decoration: none; border-radius: 5px; }
+        a.button:hover { background: #0056b3; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Child Dashboard: {{ child.name }}</h1>
+        <p><strong>Card ID:</strong> {{ child.card_id }}</p>
+        <p><strong>Date of Birth:</strong> {{ child.dob }}</p>
+        <p><strong>Parent Email:</strong> {{ child.parent_email }}</p>
+        <p><strong>Parent Phone:</strong> {{ child.parent_phone }}</p>
+
+        <h2>Region</h2>
+        <p>{{ child.region.state }}, {{ child.region.district }}, {{ child.region.panchayat }}</p>
+
+        <h2>Vaccination Status</h2>
+        <form action="/update_vaccines" method="POST">
+            <input type="hidden" name="card_id" value="{{ child.card_id }}">
+            <table>
+                <tr>
+                    <th>Vaccine</th>
+                    <th>Status</th>
+                </tr>
+                {% for vaccine, status in child.vaccines.items() %}
+                <tr>
+                    <td>{{ vaccine }}</td>
+                    <td>
+                        <select name="vaccine_{{ vaccine }}">
+                            <option value="null" {% if status == "null" %}selected{% endif %}>Not Given</option>
+                            <option value="done" {% if status == "done" %}selected{% endif %}>Done</option>
+                            <option value="due" {% if status == "due" %}selected{% endif %}>Due</option>
+                        </select>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+            <button type="submit">Update Vaccines</button>
+        </form>
+
+        <p><strong>Last Scan:</strong> {{ child.last_scan }}</p>
+        <a class="button" href="/">Back to Home</a>
+    </div>
+</body>
+</html>
